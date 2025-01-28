@@ -1,3 +1,6 @@
+/**
+ * @author ParveenBanuHebbal
+ */
 package com.blobs.quickstart.ew;
 
 import java.util.ArrayList;
@@ -12,6 +15,19 @@ public class App {
 
 	public static void main(String[] args) {
 
+		App app = new App();
+		// Uncomment the code to test AzureTableStoageWorkflow
+		// app.testAzureTableStorage();
+
+		// Uncomment the code to test AzureFileStorageTest
+		// app.testAzureFileStorageTest();
+
+		// After testing the File Storage Please clean the share to avoid billing
+		app.deleteAzureFileStorage();
+
+	}
+
+	public void testAzureTableStorage() {
 		AzureTableStorageTest client = new AzureTableStorageTest();
 
 		// Create Table Name Employee
@@ -42,5 +58,38 @@ public class App {
 					myData.get("Phone"));
 		}
 
+	}
+
+	/**
+	 * 
+	 */
+	public void testAzureFileStorageTest() {
+		AzureFileStorageTest fileStorage = new AzureFileStorageTest();
+
+		/*
+		 * Create a ShareName in the Azure File Storage
+		 */
+		String shareName = "test123";
+		fileStorage.createFileShare(shareName);
+
+		/*
+		 * Create Director for the given shareName on the Azure file Share
+		 */
+		String directoryName = "testdirph";
+		fileStorage.createDirectory(shareName, directoryName);
+
+		/*
+		 * Upload File from local to Azure File Store.
+		 */
+		String fullpathOfFile = "D:\\Workspace\\PersonalPractice\\blob-quickstart\\testfiletoupload.txt";
+		String fileName = "testfiletoupload.txt";
+
+		fileStorage.uploadFile(shareName, directoryName, fileName, fullpathOfFile);
+	}
+
+	public void deleteAzureFileStorage() {
+		AzureFileStorageTest fileStorage = new AzureFileStorageTest();
+		String shareName = "test123";
+		fileStorage.deleteShare(shareName);
 	}
 }

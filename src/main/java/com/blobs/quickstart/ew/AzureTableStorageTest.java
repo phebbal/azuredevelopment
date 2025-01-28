@@ -12,7 +12,12 @@ import com.azure.data.tables.TableServiceClient;
 import com.azure.data.tables.TableServiceClientBuilder;
 import com.azure.data.tables.models.ListEntitiesOptions;
 import com.azure.data.tables.models.TableEntity;
-
+/**
+ * prerequisites
+ * 
+ * 1. This class assumes that you already have the Storage account in Azure portal 
+ * 
+ */
 public class AzureTableStorageTest {
 
 	public static TableServiceClient getTableServiceClient() {
@@ -58,6 +63,11 @@ public class AzureTableStorageTest {
 		PagedIterable<TableEntity> entities = tableclient.listEntities(options, null, null);
 		return entities;
 
+	}
+	
+	public void deleteTable(String tableName) {
+		 getTableClient(tableName).deleteTable();
+		
 	}
 
 }
